@@ -251,7 +251,15 @@ func convert(deck string) string {
 			set = " (" + setVal.(string) + ")"
 		}
 		if varVal, exists := cardMap["variation"]; exists {
-			set = " (" + cardMap["tla"].(string) + ") " + varVal.(string)
+
+			switch varVal.(type) {
+			case float64:
+				set = " (" + cardMap["tla"].(string) + ") " + strconv.Itoa((int(varVal.(float64))))
+
+			case string:
+				set = " (" + cardMap["tla"].(string) + ") " + varVal.(string)
+			}
+
 		}
 		cards = cards + quantity + name + set + "\r\n"
 	}
